@@ -11,8 +11,8 @@ dependencies:
   - blas=1.0=mkl
   - bleach=3.3.0=pyhd3eb1b0_0
   - brotlipy=0.7.0=py38h2bbff1b_1003
-  - ca-certificates=2020.12.5=h5b45459_0
-  - certifi=2020.12.5=py38haa244fe_1
+  - ca-certificates=2021.4.13=haa95532_1
+  - certifi=2020.12.5=py38haa95532_0
   - cffi=1.14.5=py38hcd4344a_0
   - chardet=4.0.0=py38haa95532_1003
   - click=7.1.2=pyh9f0ad1d_0
@@ -71,8 +71,9 @@ dependencies:
   - numpy=1.19.2=py38hadc3359_0
   - numpy-base=1.19.2=py38ha3acd2a_0
   - olefile=0.46=py_0
-  - openssl=1.1.1k=h8ffe710_0
+  - openssl=1.1.1k=h2bbff1b_0
   - packaging=20.9=pyhd3eb1b0_0
+  - pandas=1.2.4=py38hd77b12b_0
   - pandoc=2.12=haa95532_0
   - pandocfilters=1.4.3=py38haa95532_1
   - parso=0.8.1=pyhd3eb1b0_0
@@ -93,6 +94,7 @@ dependencies:
   - python-dateutil=2.8.1=pyhd3eb1b0_0
   - python_abi=3.8=1_cp38
   - pytorch=1.8.1=py3.8_cuda10.2_cudnn7_0
+  - pytz=2021.1=pyhd3eb1b0_0
   - pywin32=227=py38he774522_1
   - pywinpty=0.5.7=py38_0
   - pyzmq=20.0.0=py38hd77b12b_1
@@ -121,6 +123,7 @@ dependencies:
   - urllib3=1.26.4=pyhd3eb1b0_0
   - vc=14.2=h21ff451_1
   - vs2015_runtime=14.27.29016=h5e58377_2
+  - watermark=2.2.0=pyhd8ed1ab_0
   - wcwidth=0.2.5=py_0
   - webencodings=0.5.1=py38_1
   - wheel=0.36.2=pyhd3eb1b0_0
@@ -160,5 +163,6 @@ dependencies:
     - tensorboard-plugin-wit==1.8.0
     - torchmetrics==0.2.0
     - werkzeug==1.0.1
+    - wget==3.2
     - yarl==1.6.3
 prefix: C:\Users\Parvex\anaconda3\envs\ZZSN
