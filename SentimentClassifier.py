@@ -1,5 +1,6 @@
 from torch import nn
 from transformers import BertModel
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 class SentimentClassifier(nn.Module):

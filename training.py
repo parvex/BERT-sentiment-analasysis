@@ -1,7 +1,9 @@
 import numpy as np
 import torch
+from matplotlib import pyplot as plt
 from torch import nn
-
+import seaborn as sns
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def train_epoch(
         model,
@@ -106,7 +108,3 @@ def show_confusion_matrix(confusion_matrix):
   hmap.xaxis.set_ticklabels(hmap.xaxis.get_ticklabels(), rotation=30, ha='right')
   plt.ylabel('True sentiment')
   plt.xlabel('Predicted sentiment');
-
-cm = confusion_matrix(y_test, y_pred)
-df_cm = pd.DataFrame(cm, index=class_names, columns=class_names)
-show_confusion_matrix(df_cm)
