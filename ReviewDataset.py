@@ -37,8 +37,8 @@ class ReviewDataset(Dataset):
 
 def create_data_loader(df, tokenizer, max_len, batch_size):
     ds = ReviewDataset(
-        reviews=df.content.to_numpy(),
-        targets=df.sentiment.to_numpy(),
+        reviews=df.reviewText.to_numpy(),
+        targets=df.overall.to_numpy(),
         tokenizer=tokenizer,
         max_len=max_len
     )
