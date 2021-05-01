@@ -3,7 +3,6 @@ import torch
 from matplotlib import pyplot as plt
 from torch import nn
 import seaborn as sns
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def train_epoch(
         model,
@@ -69,7 +68,7 @@ def eval_model(model, data_loader, loss_fn, device, n_examples):
   return correct_predictions.double() / n_examples, np.mean(losses)
 
 
-def get_predictions(model, data_loader):
+def get_predictions(model, data_loader, device):
     model = model.eval()
 
     review_texts = []

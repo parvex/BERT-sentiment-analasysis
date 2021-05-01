@@ -1,7 +1,6 @@
 import torch
 from torch.utils.data import Dataset, DataLoader
 
-
 class ReviewDataset(Dataset):
 
     def __init__(self, reviews, targets, tokenizer, max_len):
