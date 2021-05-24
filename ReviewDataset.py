@@ -1,5 +1,5 @@
 import torch
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset
 
 class ReviewDataset(Dataset):
 
@@ -34,16 +34,3 @@ class ReviewDataset(Dataset):
         }
 
 
-def create_data_loader(df, tokenizer, max_len, batch_size):
-    ds = ReviewDataset(
-        reviews=df.reviewText.to_numpy(),
-        targets=df.overall.to_numpy(),
-        tokenizer=tokenizer,
-        max_len=max_len
-    )
-
-    return DataLoader(
-        ds,
-        batch_size=batch_size,
-        num_workers=4
-    )

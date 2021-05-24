@@ -3,6 +3,7 @@ import torch
 from matplotlib import pyplot as plt
 from torch import nn
 import seaborn as sns
+import torch.nn.functional as F
 
 def train_epoch(
         model,
@@ -30,7 +31,6 @@ def train_epoch(
 
         _, preds = torch.max(outputs, dim=1)
         loss = loss_fn(outputs, targets)
-
         correct_predictions += torch.sum(preds == targets)
         losses.append(loss.item())
 
@@ -59,7 +59,6 @@ def eval_model(model, data_loader, loss_fn, device, n_examples):
         attention_mask=attention_mask
       )
       _, preds = torch.max(outputs, dim=1)
-
       loss = loss_fn(outputs, targets)
 
       correct_predictions += torch.sum(preds == targets)
@@ -106,4 +105,4 @@ def show_confusion_matrix(confusion_matrix):
   hmap.yaxis.set_ticklabels(hmap.yaxis.get_ticklabels(), rotation=0, ha='right')
   hmap.xaxis.set_ticklabels(hmap.xaxis.get_ticklabels(), rotation=30, ha='right')
   plt.ylabel('True sentiment')
-  plt.xlabel('Predicted sentiment');
+  plt.xlabel('Predicted sentiment')
