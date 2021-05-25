@@ -1,3 +1,5 @@
+import os
+
 from sklearn.metrics import confusion_matrix, precision_recall_curve, average_precision_score, recall_score, auc
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import label_binarize
@@ -6,6 +8,8 @@ import torch
 from torch import nn
 from ReviewDataset import ReviewDataset
 from SentimentClassifier import SentimentClassifier
+from consts import class_names, RANDOM_SEED, PRE_TRAINED_MODEL_NAME, TOKEN_MAX_LEN, BATCH_SIZE, EPOCHS
+from predict_review.predict_review import predict_single_review
 from prepare_data import get_df
 from transformers import BertTokenizer, AdamW, get_linear_schedule_with_warmup
 from sklearn.utils.class_weight import compute_class_weight
@@ -15,13 +19,6 @@ import pandas as pd
 from training import train_epoch, eval_model, get_predictions, show_confusion_matrix
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-PRE_TRAINED_MODEL_NAME = 'bert-base-cased'
-TOKEN_MAX_LEN = 256
-BATCH_SIZE = 32
-EPOCHS = 3
-RANDOM_SEED = 1232
-class_names = ['1', '2', '3', '4', '5']
 
 
 def create_data_loader(df, tokenizer, max_len, batch_size):
@@ -73,27 +70,6 @@ def show_metrics(y_pred, y_pred_probs, y_test):
     plt.title(
         'Average precision, recall, area under curve, f1 score, micro-averaged over all classes: AP={0:0.2f}, AR={1:0.2f}, AUC={2:0.2f}, F1={3:0.2f}'
             .format(average_precision, average_recall, pr_auc, f1_score))
-
-
-def predict_single_review(tokenizer, model):
-    review_text = "I like it, perfect"
-    encoded_review = tokenizer.encode_plus(
-        review_text,
-        max_length=TOKEN_MAX_LEN,
-        add_special_tokens=True,
-        return_token_type_ids=False,
-        pad_to_max_length=True,
-        return_attention_mask=True,
-        return_tensors='pt',
-    )
-    input_ids = encoded_review['input_ids'].to(device)
-    attention_mask = encoded_review['attention_mask'].to(device)
-
-    output = model(input_ids, attention_mask)
-    _, prediction = torch.max(output, dim=1)
-
-    print(f'Review text: {review_text}')
-    print(f'Sentiment  : {class_names[prediction]}')
 
 
 def main():
@@ -178,8 +154,11 @@ def main():
         device
     )
 
+    os.makedirs("model", exist_ok=True)
+    torch.save(model.state_dict(), "model/model.pt")
+
     show_metrics(y_pred, y_pred_probs, y_test)
-    predict_single_review(tokenizer, model)
+    predict_single_review("I like it, perfect", tokenizer, model, device)
 
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ from torch import nn
 import seaborn as sns
 import torch.nn.functional as F
 
+
 def train_epoch(
         model,
         data_loader,
@@ -42,29 +43,30 @@ def train_epoch(
 
     return correct_predictions.double() / n_examples, np.mean(losses)
 
+
 def eval_model(model, data_loader, loss_fn, device, n_examples):
-  model = model.eval()
+    model = model.eval()
 
-  losses = []
-  correct_predictions = 0
+    losses = []
+    correct_predictions = 0
 
-  with torch.no_grad():
-    for d in data_loader:
-      input_ids = d["input_ids"].to(device)
-      attention_mask = d["attention_mask"].to(device)
-      targets = d["targets"].to(device)
+    with torch.no_grad():
+        for d in data_loader:
+            input_ids = d["input_ids"].to(device)
+            attention_mask = d["attention_mask"].to(device)
+            targets = d["targets"].to(device)
 
-      outputs = model(
-        input_ids=input_ids,
-        attention_mask=attention_mask
-      )
-      _, preds = torch.max(outputs, dim=1)
-      loss = loss_fn(outputs, targets)
+            outputs = model(
+                input_ids=input_ids,
+                attention_mask=attention_mask
+            )
+            _, preds = torch.max(outputs, dim=1)
+            loss = loss_fn(outputs, targets)
 
-      correct_predictions += torch.sum(preds == targets)
-      losses.append(loss.item())
+            correct_predictions += torch.sum(preds == targets)
+            losses.append(loss.item())
 
-  return correct_predictions.double() / n_examples, np.mean(losses)
+    return correct_predictions.double() / n_examples, np.mean(losses)
 
 
 def get_predictions(model, data_loader, device):
@@ -100,9 +102,10 @@ def get_predictions(model, data_loader, device):
     real_values = torch.stack(real_values).cpu()
     return review_texts, predictions, prediction_probs, real_values
 
+
 def show_confusion_matrix(confusion_matrix):
-  hmap = sns.heatmap(confusion_matrix, annot=True, fmt="d", cmap="Blues")
-  hmap.yaxis.set_ticklabels(hmap.yaxis.get_ticklabels(), rotation=0, ha='right')
-  hmap.xaxis.set_ticklabels(hmap.xaxis.get_ticklabels(), rotation=30, ha='right')
-  plt.ylabel('True sentiment')
-  plt.xlabel('Predicted sentiment')
+    hmap = sns.heatmap(confusion_matrix, annot=True, fmt="d", cmap="Blues")
+    hmap.yaxis.set_ticklabels(hmap.yaxis.get_ticklabels(), rotation=0, ha='right')
+    hmap.xaxis.set_ticklabels(hmap.xaxis.get_ticklabels(), rotation=30, ha='right')
+    plt.ylabel('True sentiment')
+    plt.xlabel('Predicted sentiment')

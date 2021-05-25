@@ -16,16 +16,15 @@ def download_data():
 
 
 def parse(path):
-  g = gzip.open(path, 'rb')
-  for l in g:
-    yield eval(l)
+    g = gzip.open(path, 'rb')
+    for l in g:
+        yield eval(l)
 
 
 def get_df():
-  i = 0
-  df = {}
-  for d in parse(dataPath):
-    df[i] = d
-    i += 1
-  return pd.DataFrame.from_dict(df, orient='index')
-
+    i = 0
+    df = {}
+    for d in parse(dataPath):
+        df[i] = d
+        i += 1
+    return pd.DataFrame.from_dict(df, orient='index')
