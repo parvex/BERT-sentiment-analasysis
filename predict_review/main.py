@@ -22,6 +22,7 @@ if __name__ == "__main__":
         # TODO Download trained BERT from git
 
     model.state_dict(torch.load("model/model.pt"))
+    model = model.to(device)
     print("BERT Sentiment Analyzer.")
     review = input("Please enter your review (or 'q' to exit):\n")
     while review != 'q':
