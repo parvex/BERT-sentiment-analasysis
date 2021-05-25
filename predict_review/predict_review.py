@@ -15,6 +15,7 @@ def predict_single_review(review_text, tokenizer, model, device):
         pad_to_max_length=True,
         return_attention_mask=True,
         return_tensors='pt',
+        verbose=False
     )
     input_ids = encoded_review['input_ids'].to(device)
     attention_mask = encoded_review['attention_mask'].to(device)
