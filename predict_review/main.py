@@ -8,6 +8,7 @@ sys.path.insert(0, "..")
 
 from transformers import BertTokenizer
 
+from preprocess import Preprocessing
 from predict_review.predict_review import predict_single_review
 from SentimentClassifier import SentimentClassifier
 from consts import PRE_TRAINED_MODEL_NAME, class_names
@@ -41,9 +42,10 @@ def download_bert():
 
 if __name__ == "__main__":
     tokenizer = BertTokenizer.from_pretrained(PRE_TRAINED_MODEL_NAME)
+    preprocessing = Preprocessing(tokenizer)
     model = SentimentClassifier(len(class_names), PRE_TRAINED_MODEL_NAME)
     model.to(device)
-    BERT_path = "./model/model.pt"
+    BERT_path = "./model/best_model_state.pt"
     if not os.path.exists(BERT_path):
         download_bert()
 
@@ -51,7 +53,7 @@ if __name__ == "__main__":
     print("BERT Sentiment Analyzer.")
     review = input("Please enter your review (or 'q' to exit):\n")
     while review != 'q':
-        predict_single_review(review, tokenizer, model, device)
+        predict_single_review(review, preprocessing, tokenizer, model, device)
         print("_____________________________________________________")
         review = input("Please enter your review (or 'q' to exit):\n")
 

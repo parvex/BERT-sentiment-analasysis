@@ -16,16 +16,19 @@ from sklearn.utils.class_weight import compute_class_weight
 from collections import defaultdict
 import matplotlib.pyplot as plt
 import pandas as pd
+
+from preprocess import Preprocessing
 from training import train_epoch, eval_model, get_predictions, show_confusion_matrix
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-def create_data_loader(df, tokenizer, max_len, batch_size):
+def create_data_loader(df, tokenizer, preprocessing, max_len, batch_size):
     ds = ReviewDataset(
         reviews=df.reviewText.to_numpy(),
         targets=df.overall.to_numpy(),
         tokenizer=tokenizer,
+        preprocessing=preprocessing,
         max_len=max_len
     )
 
@@ -79,8 +82,9 @@ def main():
     df_train, df_test = train_test_split(df, test_size=0.25, random_state=RANDOM_SEED, stratify=df[['overall']])
 
     tokenizer = BertTokenizer.from_pretrained(PRE_TRAINED_MODEL_NAME)
-    train_data_loader = create_data_loader(df_train, tokenizer, TOKEN_MAX_LEN, BATCH_SIZE)
-    test_data_loader = create_data_loader(df_test, tokenizer, TOKEN_MAX_LEN, BATCH_SIZE)
+    preprocessing = Preprocessing(tokenizer)
+    train_data_loader = create_data_loader(df_train, tokenizer, preprocessing, TOKEN_MAX_LEN, BATCH_SIZE)
+    test_data_loader = create_data_loader(df_test, tokenizer, preprocessing, TOKEN_MAX_LEN, BATCH_SIZE)
 
     model = SentimentClassifier(len(class_names), PRE_TRAINED_MODEL_NAME)
     model = model.to(device)
@@ -158,7 +162,7 @@ def main():
     torch.save(model.state_dict(), "model/model.pt")
 
     show_metrics(y_pred, y_pred_probs, y_test)
-    predict_single_review("I like it, perfect", tokenizer, model, device)
+    predict_single_review("I like it, perfect", preprocessing, tokenizer, model, device)
 
 
 if __name__ == "__main__":
