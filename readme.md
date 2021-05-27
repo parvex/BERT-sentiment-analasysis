@@ -4,4 +4,5 @@ Dataset url: http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/rev
 
 How to use:
 1. Setup conda environment with: ```conda env create -f environment.yml```
+1. python -m spacy download en_core_web_sm
 1. Enjoy

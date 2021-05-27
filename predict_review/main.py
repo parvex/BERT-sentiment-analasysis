@@ -16,6 +16,7 @@ from consts import PRE_TRAINED_MODEL_NAME, class_names
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 BERT_URL = "https://github.com/parvex/BERT-sentiment-analasysis/raw/BIG-BRANCH-WITH-BERT-USE-CAREFULLY/predict_review/model/model.pt"
 
+
 def check_file_status(filepath, filesize):
     sys.stdout.write('\r')
     sys.stdout.flush()
