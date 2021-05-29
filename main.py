@@ -79,7 +79,6 @@ def main():
     if not os.path.exists(DATASET_PATH):
         download_dataset()
     df = pd.read_csv("./data/dataset.csv")
-    df['overall'] -= 1
 
     tokenizer = BertTokenizer.from_pretrained(PRE_TRAINED_MODEL_NAME)
 

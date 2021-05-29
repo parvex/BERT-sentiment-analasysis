@@ -20,10 +20,9 @@ def check_file_status(filepath, filesize):
 
 def download_file(file_url: str, target_path: str):
     os.makedirs(os.path.dirname(target_path), exist_ok=True)
-    print('Downloading BERT...')
     req = requests.get(file_url, stream=True)
     filesize = int(req.headers['Content-length'])
-    with open(BERT_path, 'wb') as outfile:
+    with open(target_path, 'wb') as outfile:
         chunk_size = 1048576
         for chunk in req.iter_content(chunk_size=chunk_size):
             outfile.write(chunk)
@@ -34,8 +33,10 @@ def download_file(file_url: str, target_path: str):
 
 
 def download_bert():
+    print('Downloading BERT...')
     download_file(BERT_URL, BERT_path)
 
 
 def download_dataset():
+    print('Downloading dataset...')
     download_file(DATASET_URL, DATASET_PATH)

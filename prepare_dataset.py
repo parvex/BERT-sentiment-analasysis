@@ -36,6 +36,7 @@ def get_df():
 def main():
     download_data()
     df = get_df()
+    df['overall'] -= 1
     preprocessing = Preprocessing()
 
     for index in tqdm(range(len(df))):
