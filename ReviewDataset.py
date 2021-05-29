@@ -4,11 +4,10 @@ from torch.utils.data import Dataset
 
 class ReviewDataset(Dataset):
 
-    def __init__(self, reviews, targets, tokenizer, preprocessing, max_len: int):
+    def __init__(self, reviews, targets, tokenizer, max_len: int):
         self.reviews = reviews
         self.targets = targets
         self.tokenizer = tokenizer
-        self.preprocessing = preprocessing
         self.max_len = max_len
 
     def __len__(self):
@@ -16,11 +15,10 @@ class ReviewDataset(Dataset):
 
     def __getitem__(self, item):
         review = str(self.reviews[item])
-        preprocessed_review = self.preprocessing.preprocess_text(review)
         target = self.targets[item]
 
         encoding = self.tokenizer.encode_plus(
-            preprocessed_review,
+            review,
             add_special_tokens=True,
             max_length=self.max_len,
             return_token_type_ids=False,
