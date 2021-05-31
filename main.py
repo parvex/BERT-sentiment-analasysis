@@ -82,6 +82,7 @@ def main():
 
     tokenizer = BertTokenizer.from_pretrained(PRE_TRAINED_MODEL_NAME)
 
+    df['overall'] -= 1
     df_train, df_test = train_test_split(df, test_size=0.25, random_state=RANDOM_SEED, stratify=df[['overall']])
     train_data_loader = create_data_loader(df_train, tokenizer, TOKEN_MAX_LEN, BATCH_SIZE)
     test_data_loader = create_data_loader(df_test, tokenizer, TOKEN_MAX_LEN, BATCH_SIZE)
