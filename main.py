@@ -78,7 +78,7 @@ def show_metrics(y_pred, y_pred_probs, y_test):
 def main():
     if not os.path.exists(DATASET_PATH):
         download_dataset()
-    df = pd.read_csv("./data/dataset.csv")
+    df = pd.read_csv(DATASET_PATH)
 
     tokenizer = BertTokenizer.from_pretrained(PRE_TRAINED_MODEL_NAME)
 
