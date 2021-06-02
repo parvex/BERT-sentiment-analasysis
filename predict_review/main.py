@@ -2,10 +2,10 @@ import os
 import torch
 import sys
 
-from util import BERT_path, download_bert
 
 sys.path.insert(0, "..")
 
+from util import BERT_path, download_bert
 from transformers import BertTokenizer
 
 from preprocess import Preprocessing
@@ -25,6 +25,7 @@ if __name__ == "__main__":
         download_bert()
 
     model.state_dict(torch.load(BERT_path))
+    model.eval()
     print("BERT Sentiment Analyzer.")
     review = input("Please enter your review (or 'q' to exit):\n")
     while review != 'q':
